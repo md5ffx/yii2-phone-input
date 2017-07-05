@@ -23,7 +23,10 @@ class PhoneInputValidator extends Validator
      * @var integer
      */
     public $type;
-
+    /**
+     * @var string
+     */
+    public $defaultRegion='RU';
     /**
      * @inheritdoc
      */
@@ -44,7 +47,7 @@ class PhoneInputValidator extends Validator
         $valid = false;
         $phoneUtil = PhoneNumberUtil::getInstance();
         try {
-            $phoneProto = $phoneUtil->parse($value, null);
+            $phoneProto = $phoneUtil->parse($value, $this->defaultRegion);
 
             if ($this->region !== null) {
                 $regions = is_array($this->region) ? $this->region : [$this->region];
