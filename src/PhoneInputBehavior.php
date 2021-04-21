@@ -30,7 +30,7 @@ class PhoneInputBehavior extends AttributeBehavior
     /**
      * @var string
      */
-    public $default_region;
+    public $default_region='US';
 
     /**
      * @var string
