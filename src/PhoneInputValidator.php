@@ -23,10 +23,12 @@ class PhoneInputValidator extends Validator
      * @var integer
      */
     public $type;
+    
     /**
      * @var string
      */
-    public $defaultRegion='RU';
+    public $default_region;
+
     /**
      * @inheritdoc
      */
@@ -47,7 +49,7 @@ class PhoneInputValidator extends Validator
         $valid = false;
         $phoneUtil = PhoneNumberUtil::getInstance();
         try {
-            $phoneProto = $phoneUtil->parse($value, $this->defaultRegion);
+            $phoneProto = $phoneUtil->parse($value, $this->default_region);
 
             if ($this->region !== null) {
                 $regions = is_array($this->region) ? $this->region : [$this->region];
@@ -79,7 +81,6 @@ class PhoneInputValidator extends Validator
      */
     public function clientValidateAttribute($model, $attribute, $view) {
 
-        $telInputId = Html::getInputId($model, $attribute);
         $options = Json::htmlEncode([
             'message' => \Yii::$app->getI18n()->format($this->message, [
                 'attribute' => $model->getAttributeLabel($attribute)
@@ -87,7 +88,7 @@ class PhoneInputValidator extends Validator
         ]);
 
         return <<<JS
-var options = $options, telInput = $("#$telInputId");
+var options = $options, telInput = $(attribute.input);;
 
 if($.trim(telInput.val())){
     if(!telInput.intlTelInput("isValidNumber")){
