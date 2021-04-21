@@ -27,7 +27,7 @@ class PhoneInputValidator extends Validator
     /**
      * @var string
      */
-    public $default_region;
+    public $default_region='US';
 
     /**
      * @inheritdoc
